@@ -1,5 +1,6 @@
 package hong.gom.springbootsecuritypractice.controller;
 
+
 import hong.gom.springbootsecuritypractice.dto.SecurityMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,14 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class Test {
+public class Login {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
 
     @GetMapping("/auth")
     public Authentication auth() {
