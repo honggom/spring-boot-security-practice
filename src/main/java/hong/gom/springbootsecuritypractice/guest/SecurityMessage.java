@@ -1,4 +1,4 @@
-package hong.gom.springbootsecuritypractice.dto;
+package hong.gom.springbootsecuritypractice.guest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

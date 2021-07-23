@@ -1,7 +1,7 @@
 package hong.gom.springbootsecuritypractice.controller;
 
 
-import hong.gom.springbootsecuritypractice.dto.SecurityMessage;
+import hong.gom.springbootsecuritypractice.guest.SecurityMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
