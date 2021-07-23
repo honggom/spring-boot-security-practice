@@ -57,7 +57,7 @@
 
 ## 인증 (Authentication)
 
-<img src="../images/fig-6-Authentication.png" width="600" style="max-width:600px;width:100%;" />
+<img width="758" alt="fig-6-Authentication" src="https://user-images.githubusercontent.com/67107008/126745550-14a791fe-0e79-49e7-8d64-182e7cf472a2.png">
 
 - Authentication 는 인증된 결과만 저장하는 것이 아니고, 인증을 하기 위한 정보와 인증을 받기 위한 정보가 하나의 객체에 동시에 들어 있다. 
   왜냐하면, 인증을 제공해줄 제공자(AuthenticationProvider)가 어떤 인증에 대해서 허가를 내줄 것인지 판단하기 위해서는 직접 입력된 인증을 
@@ -76,7 +76,7 @@
 
 ## 인증 제공자(AuthenticationProvider)
 
-<img src="../images/fig-7-AuthenticationProvider.png" width="600" style="max-width:600px;width:100%;" />
+<img width="685" alt="fig-7-AuthenticationProvider" src="https://user-images.githubusercontent.com/67107008/126745558-94545841-43c7-417d-ba17-182ac704a550.png">
 
 - 인증 제공자(AuthenticationProvider)는 기본적으로 Authentication 을 받아서 인증을 
   하고 인증된 결과를 다시 Authentication 객체로 전달 한다.
@@ -85,7 +85,7 @@
 
 ## 인증 관리자(AuthenticationManager)
 
-<img src="../images/fig-8-AuthenticationManager.png" width="600" style="max-width:600px;width:100%;" />
+<img width="826" alt="fig-8-AuthenticationManager" src="https://user-images.githubusercontent.com/67107008/126745565-79ce35c1-d2da-450e-b4c2-13845ed255b7.png">
 
 - 인증 제공자들을 관리하는 인터페이스가 AuthenticationManager (인증 관리자)이고, 이 인증 관리자를 구현한 객체가 ProviderManager 이다.
 - ProviderManager 도 복수개 존재할 수 있다.
