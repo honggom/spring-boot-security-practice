@@ -327,3 +327,6 @@ protected void configure(HttpSecurity http) throws Exception {
 
 ### 기타
 CSRF : https://terms.naver.com/entry.naver?docId=3431919&cid=58437&categoryId=58437
+
+### 의존성 
+![dependencies](https://user-images.githubusercontent.com/67107008/126919833-a0f71ef9-8dd8-4d72-98b2-5d796bdb9c6c.PNG)
