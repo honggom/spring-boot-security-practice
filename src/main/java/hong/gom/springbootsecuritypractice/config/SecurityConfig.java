@@ -45,8 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(request -> {
-            request.antMatchers("/").permitAll()      // "/" 요청에 대하여 접근권한 필요없음
-                    .antMatchers("/auth").permitAll() // "/auth" 요청에 대하여 접근권한 필요없음
+            request.antMatchers("/", "/auth").permitAll()      // "/", "/auth" 요청에 대하여 접근권한 필요없음
                     .anyRequest().authenticated();               // 그외 요청은 접근권한 필요함
         })
                 .formLogin(                                        //formLogin()에 파라미터를 넘기지 않으면 기본 시큐리티 login form을 사용함
