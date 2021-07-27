@@ -19,6 +19,10 @@
 - Secured : deprecated
 - PrePostAuthorize
 - AOP
+
+## Principal, Credential
+- Principal : 접근주체, 보호받는 리소스에 접근하는 대상
+- Credential : 보호받는 리소스에 접근하는 접근주체의 비밀번호
  
 ## 기본 구조
 - SecurityContextPersistenceFilter	SecurityContextRepository에서 SecurityContext를 로드하고 저장하는 일을 담당함
@@ -31,7 +35,7 @@
 - SessionManagementFilter	인증된 주체를 바탕으로 세션 트래킹을 처리해 단일 주체와 관련한 모든 세션들이 트래킹되도록 도움
 - ExceptionTranslationFilter	이 필터는 보호된 요청을 처리하는 동안 발생할 수 있는 기대한 예외의 기본 라우팅과 위임을 처리함
 - FilterSecurityInterceptor	이 필터는 권한부여와 관련한 결정을 AccessDecisionManager에게 위임해 권한부여 결정 및 접근 제어 결정을 쉽게 만들어 줌
-출처: https://devuna.tistory.com/55 [튜나 개발일기]
+- 출처: https://devuna.tistory.com/55 [튜나 개발일기]
 
 ## 로그인
     스프링 프레임워크에서 로그인을 한다는 것은 authenticated가 true인 Authentication 객체를
