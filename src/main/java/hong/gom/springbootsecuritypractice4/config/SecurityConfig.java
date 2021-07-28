@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -85,6 +87,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    SessionRegistry sessionRegistry(){
+        SessionRegistryImpl registry = new SessionRegistryImpl();
+        return registry;
+    }
+
+    @Bean
     PersistentTokenRepository tokenRepository(){
         JdbcTokenRepositoryImpl repository = new JdbcTokenRepositoryImpl();
         repository.setDataSource(dataSource);
@@ -127,7 +135,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         error.accessDeniedPage("/access-denied")
                 )
                 //토큰을 검증하는 방법이 PersistentTokenBasedRememberMeServices로 변경되어 적용된다.
-                .rememberMe(r -> r.rememberMeServices(rememberMeServices()));
+                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
+                .sessionManagement(s -> s.maximumSessions(1)
+                                        .maxSessionsPreventsLogin(false)// 새로 들어온 session을 인정함 true면 반대
+                                        .expiredUrl("/session-expired")
+                )
+                ;
     }
 
     @Override
