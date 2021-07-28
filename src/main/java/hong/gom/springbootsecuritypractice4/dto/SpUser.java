@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name ="sp_user")
+@Table(name = "sp_user")
 public class SpUser implements UserDetails {
 
     @Id
