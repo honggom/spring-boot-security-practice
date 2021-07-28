@@ -14,10 +14,13 @@ spring:
       path: /h2-console
 
   datasource:
-    url: jdbc:h2:mem:userdetails-test;
+    url: jdbc:h2:file:~/dev/temp/h2db/rememberme;
     driverClassName: org.h2.Driver
     username: sa
     password:
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
