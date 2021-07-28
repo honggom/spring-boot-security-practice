@@ -1,1 +1,1 @@
-# Spring Security 연습을 기록한 저장소입니다.
+### 웹과 모바일을 별개의 Security Chain으로 구성한 예제
