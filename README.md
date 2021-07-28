@@ -1,4 +1,3 @@
-# 기본적인 인증과 권한 처리를 다룬 브랜치입니다.
 # Spring Security
     인증(Authentication)과 
     인가(권한/Authorization)로 이루어진 Spring framework
