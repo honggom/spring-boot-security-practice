@@ -8,7 +8,7 @@
 ## ConcurrentSessionFilter
 
 - SessionRegistry 를 사용한다. 이 빈을 이용해 세션사용자(SessionInformation)를 모니터링 할 수 있다.
-  <img src="../images/fig-16-concurrent-session.png" width="600" style="max-width:600px;width:100%;" />
+<img width="984" alt="fig-16-concurrent-session" src="https://user-images.githubusercontent.com/67107008/127267890-cc952996-b63f-4f8c-816c-64807f4f74c5.png">
 
 - 만료된 세션에 대한 요청인 경우 세션 즉시 종료. 세션 만료에 대한 판단은 SessionManagementFilter 의 ConcurrentSessionControlAuthenticationStrategy 에서 처리한다.
 - 문제점
@@ -38,7 +38,7 @@
     )
   ```
 
-  <img src="../images/fig-17-session-management.png" width="600" style="max-width:600px;width:100%;" />
+<img width="992" alt="fig-17-session-management" src="https://user-images.githubusercontent.com/67107008/127267896-7f0e4da6-da4e-494b-ac92-e77898ee69b7.png">
 
 - SessionFixationProtectionStrategy : 세션 고정 문제 해결
 
