@@ -4,11 +4,11 @@
 
 - 스프링은 아래와 같은 로그인 방식들을 지원한다.
 
-  <img src="../images/fig-5-2-user-login.png" width="400" style="max-width:400px;width:100%;" />
+  <img width="621" alt="fig-5-2-user-login" src="https://user-images.githubusercontent.com/67107008/127252593-3f48f3e8-5bfb-4e13-a5eb-a2331a567931.png">
 
 - 스프링이 인증 처리는 세션과는 별도로 동작하도록 설계되어 있다. 그래서 session 을 사용하건 사용하지 않건 같은 Authentication과 AuthenticationProvider 를 사용할 수 있다.
 
-  <img src="../images/fig-13-spring-authentication.png" width="400" style="max-width:400px;width:100%;" />
+  <img width="943" alt="fig-13-spring-authentication" src="https://user-images.githubusercontent.com/67107008/127252604-fc55671d-5fe5-47a6-8a57-a5fa43871e7e.png">
 
 - 스프링의 인증을 유지시켜주기 위해서는 session 을 이용하는 것이 개발자에게는 여러모로 편리하다. 이후 인증은 서버가 메모리를 소모해서 세션객체를 가지고 유지시켜주는 작업을 하도록 할 수 있다. 세션은 브라우저의 쿠키에 JSESSIONID 값을 심어놓고, 브라우저와 서버가 이 값을 주고 받으면서 세션을 보장받을 수 있다.
 
@@ -18,14 +18,13 @@
 
 - SecurityContextRepository 에 저장된 SecurityContext 를 Request의 LocalThread에 넣어주었다가 뺏는 역할을 한다. doFilter 메소드를 따라가보면 알 수 있다. 세션에 SecurityContext를 보관했다가 다음 request에서 넣어준다.
 
-  <img src="../images/fig-14-securitycontext-persistence-filter.png" width="600" style="max-width:600px;width:100%;" />
+  <img width="982" alt="fig-14-securitycontext-persistence-filter" src="https://user-images.githubusercontent.com/67107008/127252616-65c094c9-2ea9-4dd1-a28f-0343aced6ced.png">
 
 ## RememberMeAuthenticationFilter
 
 - 인증 정보를 세션 관리하는 경우, 세션 timeout이 발생하게 도면, remember-me 쿠키를 이용해 로그인을 기억했다 자동으로 재로그인 시켜주는 기능이다.
 
-  <img src="../images/fig-15-rememberme-filter.png" width="600" style="max-width:600px;width:100%;" />
-
+  <img width="1045" alt="fig-15-rememberme-filter" src="https://user-images.githubusercontent.com/67107008/127252628-1dc08370-f9ec-41cd-90d7-bb376201318f.png">
     - key : Hash 암/복호화에 사용할 키 값
     - token-validity-seconds : 토큰 유효 기간
     - authentication-success-handler-ref : 핸들러를 커스마이징 했다면 로그인 성공 후 수행할 로직
