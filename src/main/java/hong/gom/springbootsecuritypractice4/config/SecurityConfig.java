@@ -15,13 +15,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -38,125 +41,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SpUserService userService;
 
-    private final DataSource dataSource;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
-    }
-
     @Bean
     PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
-    RoleHierarchy roleHierarchy(){
-        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
-        return roleHierarchy;
-    }
-
-    @Bean
-    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher(){
-        return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher(){
-            @Override
-            public void sessionCreated(HttpSessionEvent event){
-                super.sessionCreated(event);
-                LOGGER.info("=======세션 이벤트=======");
-                LOGGER.info("===>> [{}] 세션 생성됨 {} \n", LocalDateTime.now(), event.getSession().getId());
-                LOGGER.info("=======세션 이벤트=======");
-            }
-
-            @Override
-            public void sessionDestroyed(HttpSessionEvent event){
-                super.sessionDestroyed(event);
-                LOGGER.info("=======세션 이벤트=======");
-                LOGGER.info("===>> [{}] 세션 만료됨 {} \n", LocalDateTime.now(), event.getSession().getId());
-                LOGGER.info("=======세션 이벤트=======");
-            }
-
-            @Override
-            public void sessionIdChanged(HttpSessionEvent event, String oldSessionoId){
-                super.sessionIdChanged(event, oldSessionoId);
-                LOGGER.info("=======세션 이벤트=======");
-                LOGGER.info("===>> [{}] 세션 아이디 변경 {}:{} \n", LocalDateTime.now(), oldSessionoId, event.getSession().getId());
-                LOGGER.info("=======세션 이벤트=======");
-            }
-        });
-    }
-
-    @Bean
-    SessionRegistry sessionRegistry(){
-        SessionRegistryImpl registry = new SessionRegistryImpl();
-        return registry;
-    }
-
-    @Bean
-    PersistentTokenRepository tokenRepository(){
-        JdbcTokenRepositoryImpl repository = new JdbcTokenRepositoryImpl();
-        repository.setDataSource(dataSource);
-        try {
-            repository.removeUserTokens("1");
-        }catch (Exception e){
-            repository.setCreateTableOnStartup(true);
-        }
-        return repository;
-    }
-
-
-    @Bean
-    PersistentTokenBasedRememberMeServices rememberMeServices(){
-        PersistentTokenBasedRememberMeServices service =
-                new PersistentTokenBasedRememberMeServices("hello",
-                        userService,
-                        tokenRepository()
-                        );
-        return service;
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(request->
-                        request.antMatchers("/").permitAll()
-                                .anyRequest().authenticated()
+        JWTLoginFilter loginFilter = new JWTLoginFilter(authenticationManager());
+        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), userService);
+        http.csrf().disable()
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .formLogin(login->
-                        login.loginPage("/login")
-                                .loginProcessingUrl("/loginprocess")
-                                .permitAll()
-                                .defaultSuccessUrl("/", false)
-                                .failureUrl("/login-error")
-                )
-                .logout(logout->
-                        logout.logoutSuccessUrl("/"))
-                .exceptionHandling(error->
-                        error.accessDeniedPage("/access-denied")
-                )
-                //토큰을 검증하는 방법이 PersistentTokenBasedRememberMeServices로 변경되어 적용된다.
-                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
-                .sessionManagement(s -> s.maximumSessions(1)
-                                        .maxSessionsPreventsLogin(false)// 새로 들어온 session을 인정함 true면 반대
-                                        .expiredUrl("/session-expired")
-                )
+                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(checkFilter, BasicAuthenticationFilter.class)
                 ;
     }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                .requestMatchers(
-                        PathRequest.toStaticResources().atCommonLocations(),
-                        PathRequest.toH2Console()
-                );
-    }
-
-    /*
-    PersistentTokenBasedRememberMeServices 동작 방식
-    1. 세션이 있으면 세션을 기준으로 로그인 절차 생략
-    2. 세션이 없으면 토큰 값을 디비 값과 비교 이때 db에는 토큰의 시리즈 값이 저장되어 있음
-    3. 새로운 토큰을 발행하면 클라이언트 쪽의 토큰과 db의 토큰을 update한다.
-     */
-
 }
