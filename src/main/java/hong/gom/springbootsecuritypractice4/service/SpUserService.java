@@ -60,7 +60,15 @@ public class SpUserService implements UserDetailsService {
     public SpUser load(SpOAuth2User oAuth2User){
         SpOAuth2User dbUser = oAuth2UserRepository.findById(oAuth2User.getOauth2UserId())
                 .orElseGet(() -> {
-                            return null;
+                    SpUser user = new SpUser();
+                    user.setEmail(oAuth2User.getEmail());
+                    user.setName(oAuth2User.getName());
+                    user.setEnabled(true);
+                    user = userRepository.save(user);
+                    addAuthority(user.getUserId(), "ROLE_USER");
+
+                    oAuth2User.setUserId(user.getUserId());
+                    return oAuth2UserRepository.save(oAuth2User);
                 });
         return userRepository.findById(dbUser.getUserId()).get();
     }

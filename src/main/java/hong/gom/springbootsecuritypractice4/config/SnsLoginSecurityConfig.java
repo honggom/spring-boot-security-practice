@@ -11,16 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @RequiredArgsConstructor
 public class SnsLoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final SpOAuth2UserService oAuth2UserService;
-    private final SpOidcUserService oidcUserService;
+    //private final SpOAuth2UserService oAuth2UserService;
+    //private final SpOidcUserService oidcUserService;
+    private final SpOAuth2SuccessHandler successHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.oauth2Login(
-                oauth2 -> oauth2.userInfoEndpoint(
-                        userInfo -> userInfo.userService(oAuth2UserService)
-                                .oidcUserService(oidcUserService)
-                ).successHandler()
+                oauth2 -> oauth2
+//                        userInfo -> userInfo.userService(oAuth2UserService)
+//                        .userInfoEndpoint(
+//                                .oidcUserService(oidcUserService)
+//                )
+                        .successHandler(successHandler)
         )
 
         ;
