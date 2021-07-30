@@ -7,3 +7,4 @@
 - remember-me : TokenBasedRememberMeServices, PersistenceTokenBasedRememberMeServices의 차이점을 연습한 브랜치
 - manage-session : Session에 관한 여러 정책을 연습한 브랜치
 - jwt : JWT 사용을 연습한 브랜치
+- oauth2 : OAuth2로 구글 로그인 연동을 연습한 브랜치

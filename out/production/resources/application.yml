@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 937428592041-67g3pe0lrqr0k0jqc0r2utb8lnn0g6gp.apps.googleusercontent.com
+            clientSecret: 9rbSO8jeH-yEPpd9hkbzlJH6
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: create-drop
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/hong_talk
+    username: root
+    password: 1234
+    initialization-mode: always
