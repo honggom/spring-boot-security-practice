@@ -11,9 +11,6 @@ public class SpOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
-        // user
-
         return super.loadUser(userRequest);
     }
 }
