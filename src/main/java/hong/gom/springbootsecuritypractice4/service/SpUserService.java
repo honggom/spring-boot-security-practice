@@ -23,7 +23,6 @@ public class SpUserService implements UserDetailsService {
     private final SpUserRepository userRepository;
     private final SpOAuth2UserRepository oAuth2UserRepository;
 
-    //db 데이터에서 user를 찾는다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findSpUserByEmail(username)
@@ -38,7 +37,6 @@ public class SpUserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    //권한을 추가한다.
     public void addAuthority(Long userId, String authority){
         userRepository.findById(userId).ifPresent(user -> {
             SpAuthority newRole = new SpAuthority(user.getUserId(), authority); //해당 id의 새로운 권한을 부여

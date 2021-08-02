@@ -29,16 +29,16 @@ public class SpOAuth2SuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException
     {
+        // 접근 주체
         Object principal = authentication.getPrincipal();
+
         if(principal instanceof OidcUser){
             SpOAuth2User oauth = SpOAuth2User.Provider.google.convert((OidcUser) principal);
             SpUser user = userService.load(oauth);
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
             );
-        }else if(principal instanceof OAuth2User){
-
         }
-        request.getRequestDispatcher("/").forward(request, response);
+        request.getRequestDispatcher("/hello").forward(request, response);
     }
 }

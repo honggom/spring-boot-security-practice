@@ -17,7 +17,6 @@ import javax.persistence.*;
 @IdClass(SpAuthority.class)
 public class SpAuthority implements GrantedAuthority {
 
-
     @Id
     @Column(name = "user_id")
     private Long userId;

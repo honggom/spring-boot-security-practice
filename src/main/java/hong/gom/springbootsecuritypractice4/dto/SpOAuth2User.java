@@ -22,7 +22,7 @@ import static java.lang.String.format;
 public class SpOAuth2User {
 
     @Id
-    private String oauth2UserId; //google-{id} , naver-{id} 각 회사가 제공하는 id (primary key)
+    private String oauth2UserId; // google-{id}, naver-{id} 각 회사가 제공하는 id (primary key)
 
     private Long userId;
 
