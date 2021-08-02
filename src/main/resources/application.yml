@@ -7,8 +7,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 937428592041-67g3pe0lrqr0k0jqc0r2utb8lnn0g6gp.apps.googleusercontent.com
-            clientSecret: 9rbSO8jeH-yEPpd9hkbzlJH6
+            clientId: # your id
+            clientSecret: # your secret
   jpa:
     show-sql: true
     properties:
